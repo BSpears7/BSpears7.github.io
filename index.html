@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>About Me – Brendan</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<style>
+  :root {
+    --red: #e10600;
+    --black: #0a0a0a;
+    --white: #ffffff;
+    --gray: #cfcfcf;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    background: var(--black);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    height: 90vh;
+    background: url('https://images.unsplash.com/photo-1502904550040-7534597429ae?auto=format&fit=crop&w=1600&q=80')
+      center/cover no-repeat;
+    display: flex;
+    align-items: flex-end;
+    padding: 4rem;
+  }
+
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.85));
+  }
+
+  .hero-text {
+    position: relative;
+    max-width: 700px;
+  }
+
+  .hero-text h1 {
+    font-size: 4.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .hero-text h1 span {
+    color: var(--red);
+  }
+
+  .hero-text p {
+    margin-top: 1rem;
+    font-size: 1.25rem;
+    max-width: 550px;
+  }
+
+  /* ANGLED SECTION */
+  .angled {
+    position: relative;
+    padding: 5rem 2rem;
+    background: var(--black);
+  }
+
+  .angled::before {
+    content: "";
+    position: absolute;
+    top: -70px;
+    left: 0;
+    width: 100%;
+    height: 140px;
+    background: var(--black);
+    transform: skewY(-5deg);
+  }
+
+  .section-title {
+    font-size: 2.4rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    border-left: 8px solid var(--red);
+    padding-left: 1rem;
+  }
+
+  /* STORY */
+  .story {
+    max-width: 900px;
+    line-height: 1.7;
+    font-size: 1.2rem;
+    color: var(--gray);
+  }
+
+  .story strong {
+    color: var(--white);
+  }
+
+  /* SNAPSHOT GRID */
+  .snapshot-grid {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+
+  .snap-card {
+    background: #111;
+    padding: 1.7rem;
+    border-left: 5px solid var(--red);
+    border-radius: 4px;
+  }
+
+  .snap-card h3 {
+    font-size: 1rem;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+    color: var(--red);
+  }
+
+  .snap-card p {
+    font-size: 1rem;
+    color: var(--gray);
+    line-height: 1.5;
+  }
+
+  /* TAGS */
+  .tags {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+
+  .tag {
+    background: var(--red);
+    color: var(--white);
+    padding: 0.45rem 0.9rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    border-radius: 3px;
+    font-weight: 700;
+  }
+
+  /* LINKS */
+  .links {
+    margin-top: 3rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .link {
+    text-decoration: none;
+    color: var(--white);
+    padding: 0.8rem 1.3rem;
+    border: 2px solid var(--red);
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition: 0.2s ease;
+  }
+
+  .link:hover {
+    background: var(--red);
+    transform: translateY(-3px);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--gray);
+  }
+
+  @media (max-width: 600px) {
+    .hero-text h1 {
+      font-size: 3rem;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Brendan<br><span>Unleashed</span></h1>
+      <p>A builder with momentum. A thinker with intention. A learner with no off switch.</p>
+    </div>
+  </section>
+
+  <!-- STORY -->
+  <section class="angled">
+    <h2 class="section-title">My Story</h2>
+    <div class="story">
+      <p>
+        I chase momentum — the moment where effort becomes lift. Whether I’m building systems,
+        solving problems, or learning something new, I’m drawn to work that feels alive.
+      </p>
+      <p>
+        I care about <strong>clarity</strong>, <strong>impact</strong>, and the human side of every decision.
+        I like connecting dots, asking sharper questions, and pushing myself toward meaningful challenges.
+      </p>
+    </div>
+
+    <!-- SNAPSHOT -->
+    <div class="snapshot-grid">
+      <div class="snap-card">
+        <h3>How I Think</h3>
+        <p>Analytical but human-first. Systems should make life smoother, not colder.</p>
+      </div>
+      <div class="snap-card">
+        <h3>What I Value</h3>
+        <p>Honesty, follow-through, curiosity, and people who show up as themselves.</p>
+      </div>
+      <div class="snap-card">
+        <h3>What Drives Me</h3>
+        <p>Building with others, learning fast, and making complex ideas feel simple.</p>
+      </div>
+    </div>
+
+    <!-- TAGS -->
+    <div class="tags">
+      <span class="tag">Curiosity</span>
+      <span class="tag">Momentum</span>
+      <span class="tag">Systems Thinking</span>
+      <span class="tag">Collaboration</span>
+    </div>
+
+    <!-- LINKS -->
+    <div class="links">
+      <a class="link" href="#">Portfolio</a>
+      <a class="link" href="#">LinkedIn</a>
+      <a class="link" href="mailto:you@example.com">Email Me</a>
+    </div>
+  </section>
+
+  <footer>
+    Built with energy · Cincinnati, OH · 2026
+  </footer>
+
+</body>
+</html>
