@@ -2,15 +2,17 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>About Me – Brendan</title>
+<title>Xavier Musketeers Basketball – 2026-27 Schedule</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <style>
   :root {
-    --red: #e10600;
-    --black: #0a0a0a;
+    --navy: #0c2340;
+    --navy-dark: #071527;
+    --gray: #a7a9ac;
+    --gray-light: #e5e6e7;
     --white: #ffffff;
-    --gray: #cfcfcf;
+    --accent: #4d7ea8;
   }
 
   * {
@@ -21,7 +23,7 @@
 
   body {
     font-family: "Helvetica Neue", Arial, sans-serif;
-    background: var(--black);
+    background: var(--navy-dark);
     color: var(--white);
     overflow-x: hidden;
   }
@@ -29,111 +31,168 @@
   /* HERO */
   .hero {
     position: relative;
-    height: 90vh;
-    background: url('https://images.unsplash.com/photo-1502904550040-7534597429ae?auto=format&fit=crop&w=1600&q=80')
-      center/cover no-repeat;
-    display: flex;
-    align-items: flex-end;
-    padding: 4rem;
+    padding: 5rem 2rem 4rem;
+    background: linear-gradient(160deg, var(--navy) 0%, var(--navy-dark) 100%);
+    text-align: center;
+    border-bottom: 6px solid var(--gray);
   }
 
-  .hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.85));
+  .hero .eyebrow {
+    letter-spacing: 0.3em;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    color: var(--gray);
+    font-weight: 700;
   }
 
-  .hero-text {
-    position: relative;
-    max-width: 700px;
-  }
-
-  .hero-text h1 {
-    font-size: 4.5rem;
+  .hero h1 {
+    margin-top: 0.8rem;
+    font-size: 3.4rem;
     font-weight: 900;
     text-transform: uppercase;
-    line-height: 1;
+    line-height: 1.1;
   }
 
-  .hero-text h1 span {
-    color: var(--red);
+  .hero h1 span {
+    color: var(--gray-light);
   }
 
-  .hero-text p {
+  .hero p {
     margin-top: 1rem;
-    font-size: 1.25rem;
-    max-width: 550px;
+    font-size: 1.15rem;
+    color: var(--gray-light);
+    max-width: 620px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  /* ANGLED SECTION */
-  .angled {
-    position: relative;
-    padding: 5rem 2rem;
-    background: var(--black);
+  .hero .note {
+    margin-top: 1.5rem;
+    display: inline-block;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid var(--gray);
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: var(--gray-light);
   }
 
-  .angled::before {
-    content: "";
-    position: absolute;
-    top: -70px;
-    left: 0;
-    width: 100%;
-    height: 140px;
-    background: var(--black);
-    transform: skewY(-5deg);
+  /* SECTION */
+  .section {
+    padding: 3.5rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
   }
 
   .section-title {
-    font-size: 2.4rem;
+    font-size: 1.8rem;
     font-weight: 900;
     text-transform: uppercase;
-    margin-bottom: 2rem;
-    border-left: 8px solid var(--red);
+    margin-bottom: 1.5rem;
+    border-left: 8px solid var(--gray);
     padding-left: 1rem;
   }
 
-  /* STORY */
-  .story {
-    max-width: 900px;
-    line-height: 1.7;
-    font-size: 1.2rem;
-    color: var(--gray);
+  /* LEGEND */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+    font-size: 0.85rem;
+    color: var(--gray-light);
   }
 
-  .story strong {
+  .legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .dot.conf { background: var(--accent); }
+  .dot.nonconf { background: var(--gray); }
+  .dot.home { border: 2px solid var(--white); background: transparent; }
+  .dot.away { background: var(--white); }
+
+  /* SCHEDULE TABLE */
+  .schedule-wrap {
+    overflow-x: auto;
+    border-radius: 6px;
+    border: 1px solid #1c3455;
+  }
+
+  table.schedule {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px;
+    background: #0f1f36;
+  }
+
+  table.schedule thead th {
+    background: var(--navy);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    text-align: left;
+    padding: 0.9rem 1rem;
+    border-bottom: 2px solid var(--gray);
+  }
+
+  table.schedule tbody td {
+    padding: 0.85rem 1rem;
+    font-size: 0.95rem;
+    border-bottom: 1px solid #1c3455;
+    color: var(--gray-light);
+  }
+
+  table.schedule tbody tr:hover {
+    background: #142a49;
+  }
+
+  .month-row td {
+    background: var(--navy);
+    color: var(--white);
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    border-bottom: 2px solid var(--gray);
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 0.2rem 0.55rem;
+    border-radius: 3px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .badge.conf {
+    background: var(--accent);
     color: var(--white);
   }
 
-  /* SNAPSHOT GRID */
-  .snapshot-grid {
-    margin-top: 3rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
+  .badge.nonconf {
+    background: #2a3f5c;
+    color: var(--gray-light);
   }
 
-  .snap-card {
-    background: #111;
-    padding: 1.7rem;
-    border-left: 5px solid var(--red);
-    border-radius: 4px;
+  .loc {
+    font-weight: 700;
   }
 
-  .snap-card h3 {
-    font-size: 1rem;
-    text-transform: uppercase;
-    margin-bottom: 0.8rem;
-    color: var(--red);
-  }
+  .loc.home { color: var(--white); }
+  .loc.away { color: var(--gray); }
 
-  .snap-card p {
-    font-size: 1rem;
-    color: var(--gray);
-    line-height: 1.5;
-  }
-
-  /* TAGS */
+  /* TAGS / KEY OPPONENTS */
   .tags {
     margin-top: 2.5rem;
     display: flex;
@@ -142,7 +201,8 @@
   }
 
   .tag {
-    background: var(--red);
+    background: var(--navy);
+    border: 1px solid var(--gray);
     color: var(--white);
     padding: 0.45rem 0.9rem;
     font-size: 0.8rem;
@@ -163,7 +223,7 @@
     text-decoration: none;
     color: var(--white);
     padding: 0.8rem 1.3rem;
-    border: 2px solid var(--red);
+    border: 2px solid var(--gray);
     text-transform: uppercase;
     font-size: 0.9rem;
     font-weight: 700;
@@ -171,7 +231,8 @@
   }
 
   .link:hover {
-    background: var(--red);
+    background: var(--navy);
+    border-color: var(--white);
     transform: translateY(-3px);
   }
 
@@ -181,11 +242,12 @@
     text-align: center;
     font-size: 0.85rem;
     color: var(--gray);
+    border-top: 1px solid #1c3455;
   }
 
   @media (max-width: 600px) {
-    .hero-text h1 {
-      font-size: 3rem;
+    .hero h1 {
+      font-size: 2.2rem;
     }
   }
 </style>
@@ -195,60 +257,200 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-text">
-      <h1>Brendan<br><span>Unleashed</span></h1>
-      <p>A builder. A thinker with intention. A learner with no off switch.</p>
+    <div class="eyebrow">Xavier University Athletics</div>
+    <h1>Musketeers <span>Basketball</span></h1>
+    <p>The official-style 2026&ndash;27 men's basketball schedule &mdash; Cincinnati, Ohio.</p>
+    <div class="note">
+      Dates, times, and non-conference opponents below are placeholders until Xavier Athletics
+      releases the official 2026&ndash;27 schedule. Big East opponents are accurate to conference membership.
     </div>
   </section>
 
-  <!-- STORY -->
-  <section class="angled">
-    <h2 class="section-title">My Story</h2>
-    <div class="story">
-      <p>
-        I chase momentum — the moment where effort becomes lift. Whether I’m building systems,
-        solving problems, or learning something new, I’m drawn to work that feels alive.
-      </p>
-      <p>
-        I care about <strong>clarity</strong>, <strong>impact</strong>, and the human side of every decision.
-        I like connecting dots, asking sharper questions, and pushing myself toward meaningful challenges.
-      </p>
+  <!-- SCHEDULE -->
+  <section class="section">
+    <h2 class="section-title">2026&ndash;27 Schedule</h2>
+
+    <div class="legend">
+      <span><span class="dot conf"></span> Big East Conference</span>
+      <span><span class="dot nonconf"></span> Non-Conference</span>
+      <span><span class="dot home"></span> Home (Cintas Center)</span>
+      <span><span class="dot away"></span> Away</span>
     </div>
 
-    <!-- SNAPSHOT -->
-    <div class="snapshot-grid">
-      <div class="snap-card">
-        <h3>How I Think</h3>
-        <p>Analytical but human-first. Systems should make life smoother, not colder.</p>
-      </div>
-      <div class="snap-card">
-        <h3>What I Value</h3>
-        <p>Honesty, follow-through, curiosity, and people who show up as themselves.</p>
-      </div>
-      <div class="snap-card">
-        <h3>What Drives Me</h3>
-        <p>Building with others, learning fast, and making complex ideas feel simple.</p>
-      </div>
+    <div class="schedule-wrap">
+      <table class="schedule">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Opponent</th>
+            <th>Location</th>
+            <th>Time (ET)</th>
+            <th>Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="month-row"><td colspan="5">November 2026</td></tr>
+          <tr>
+            <td>TBD</td>
+            <td>Exhibition Opponent</td>
+            <td class="loc home">Cintas Center</td>
+            <td>TBD</td>
+            <td><span class="badge nonconf">Exhibition</span></td>
+          </tr>
+          <tr>
+            <td>TBD</td>
+            <td>Non-Conference Opponent</td>
+            <td class="loc home">Cintas Center</td>
+            <td>TBD</td>
+            <td><span class="badge nonconf">Non-Conf</span></td>
+          </tr>
+          <tr>
+            <td>TBD</td>
+            <td>Non-Conference Opponent</td>
+            <td class="loc away">Away</td>
+            <td>TBD</td>
+            <td><span class="badge nonconf">Non-Conf</span></td>
+          </tr>
+
+          <tr class="month-row"><td colspan="5">December 2026</td></tr>
+          <tr>
+            <td>TBD</td>
+            <td>Crosstown Rival &mdash; Cincinnati</td>
+            <td class="loc home">Cintas Center</td>
+            <td>TBD</td>
+            <td><span class="badge nonconf">Non-Conf</span></td>
+          </tr>
+          <tr>
+            <td>TBD</td>
+            <td>Non-Conference Opponent</td>
+            <td class="loc away">Away</td>
+            <td>TBD</td>
+            <td><span class="badge nonconf">Non-Conf</span></td>
+          </tr>
+          <tr>
+            <td>TBD</td>
+            <td>Butler</td>
+            <td class="loc home">Cintas Center</td>
+            <td>TBD</td>
+            <td><span class="badge conf">Big East</span></td>
+          </tr>
+
+          <tr class="month-row"><td colspan="5">January 2027</td></tr>
+          <tr>
+            <td>TBD</td>
+            <td>Creighton</td>
+            <td class="loc away">Away</td>
+            <td>TBD</td>
+            <td><span class="badge conf">Big East</span></td>
+          </tr>
+          <tr>
+            <td>TBD</td>
+            <td>Villanova</td>
+            <td class="loc home">Cintas Center</td>
+            <td>TBD</td>
+            <td><span class="badge conf">Big East</span></td>
+          </tr>
+          <tr>
+            <td>TBD</td>
+            <td>Georgetown</td>
+            <td class="loc away">Away</td>
+            <td>TBD</td>
+            <td><span class="badge conf">Big East</span></td>
+          </tr>
+          <tr>
+            <td>TBD</td>
+            <td>Providence</td>
+            <td class="loc home">Cintas Center</td>
+            <td>TBD</td>
+            <td><span class="badge conf">Big East</span></td>
+          </tr>
+          <tr>
+            <td>TBD</td>
+            <td>UConn</td>
+            <td class="loc away">Away</td>
+            <td>TBD</td>
+            <td><span class="badge conf">Big East</span></td>
+          </tr>
+
+          <tr class="month-row"><td colspan="5">February 2027</td></tr>
+          <tr>
+            <td>TBD</td>
+            <td>St. John's</td>
+            <td class="loc home">Cintas Center</td>
+            <td>TBD</td>
+            <td><span class="badge conf">Big East</span></td>
+          </tr>
+          <tr>
+            <td>TBD</td>
+            <td>Marquette</td>
+            <td class="loc away">Away</td>
+            <td>TBD</td>
+            <td><span class="badge conf">Big East</span></td>
+          </tr>
+          <tr>
+            <td>TBD</td>
+            <td>Seton Hall</td>
+            <td class="loc home">Cintas Center</td>
+            <td>TBD</td>
+            <td><span class="badge conf">Big East</span></td>
+          </tr>
+          <tr>
+            <td>TBD</td>
+            <td>DePaul</td>
+            <td class="loc away">Away</td>
+            <td>TBD</td>
+            <td><span class="badge conf">Big East</span></td>
+          </tr>
+          <tr>
+            <td>TBD</td>
+            <td>Butler</td>
+            <td class="loc away">Away</td>
+            <td>TBD</td>
+            <td><span class="badge conf">Big East</span></td>
+          </tr>
+
+          <tr class="month-row"><td colspan="5">March 2027</td></tr>
+          <tr>
+            <td>TBD</td>
+            <td>Creighton</td>
+            <td class="loc home">Cintas Center</td>
+            <td>TBD</td>
+            <td><span class="badge conf">Big East</span></td>
+          </tr>
+          <tr>
+            <td>TBD</td>
+            <td>Big East Tournament</td>
+            <td class="loc away">Madison Square Garden, NYC</td>
+            <td>TBD</td>
+            <td><span class="badge conf">Big East</span></td>
+          </tr>
+          <tr>
+            <td>TBD</td>
+            <td>NCAA Tournament</td>
+            <td class="loc away">TBD</td>
+            <td>TBD</td>
+            <td><span class="badge nonconf">Postseason</span></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-    <!-- TAGS -->
     <div class="tags">
-      <span class="tag">Curiosity</span>
-      <span class="tag">Momentum</span>
-      <span class="tag">Systems Thinking</span>
-      <span class="tag">Collaboration</span>
+      <span class="tag">Big East Conference</span>
+      <span class="tag">Cintas Center</span>
+      <span class="tag">Cincinnati, OH</span>
+      <span class="tag">Musketeers</span>
     </div>
 
-    <!-- LINKS -->
     <div class="links">
-      <a class="link" href="#">Portfolio</a>
-      <a class="link" href="#">LinkedIn</a>
-      <a class="link" href="mailto:you@example.com">Email Me</a>
+      <a class="link" href="https://goxavier.com/sports/mens-basketball/schedule" target="_blank" rel="noopener">Official Schedule</a>
+      <a class="link" href="https://goxavier.com/sports/mens-basketball" target="_blank" rel="noopener">Team Page</a>
+      <a class="link" href="https://www.bigeast.com/" target="_blank" rel="noopener">Big East</a>
     </div>
   </section>
 
   <footer>
-    Built with energy · Cincinnati, OH · 2026
+    Go Musketeers &middot; Cincinnati, OH &middot; Schedule template for 2026&ndash;27 season
   </footer>
 
 </body>
