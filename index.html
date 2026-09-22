@@ -37,6 +37,16 @@
     border-bottom: 6px solid var(--gray);
   }
 
+  .hero .name-tag {
+    position: absolute;
+    top: 1rem;
+    left: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--gray-light);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
   .hero .eyebrow {
     letter-spacing: 0.3em;
     font-size: 0.85rem;
@@ -77,6 +87,268 @@
     color: var(--gray-light);
   }
 
+  /* PHOTO STRIP */
+  .photo-strip {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+    background: var(--navy-dark);
+  }
+
+  .photo-strip img {
+    width: 100%;
+    height: 130px;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(10%) contrast(1.05);
+  }
+
+  @media (max-width: 700px) {
+    .photo-strip {
+      grid-template-columns: 1fr;
+    }
+    .photo-strip img {
+      height: 100px;
+    }
+  }
+
+  /* NEXT GAME COUNTDOWN */
+  .next-game {
+    margin: 2.5rem auto 0;
+    position: relative;
+    max-width: 1150px;
+    padding: 0 1.5rem;
+  }
+
+  .next-game-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .team-badge {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .team-badge .logo-glow {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle, rgba(232, 184, 75, 0.28) 0%, rgba(232, 184, 75, 0) 72%);
+  }
+
+  .team-badge img {
+    width: 92px;
+    height: 92px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 14px rgba(232, 184, 75, 0.5));
+    animation: teamFloat 3.6s ease-in-out infinite;
+  }
+
+  .team-badge.away img {
+    animation-delay: 1.3s;
+  }
+
+  .team-badge .team-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gray-light);
+    font-weight: 800;
+    max-width: 140px;
+    text-align: center;
+  }
+
+  @keyframes teamFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .team-badge img { animation: none; }
+  }
+
+  @media (max-width: 900px) {
+    .next-game-row { flex-direction: column; }
+    .team-badge { flex-direction: row; }
+    .team-badge .logo-glow { width: 70px; height: 70px; }
+    .team-badge img { width: 52px; height: 52px; }
+  }
+
+  .next-game-card {
+    background: linear-gradient(135deg, var(--navy) 0%, #142a49 100%);
+    border: 1px solid var(--gray);
+    border-radius: 10px;
+    padding: 1.8rem 2rem;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+    text-align: center;
+    flex: 1 1 560px;
+    max-width: 620px;
+  }
+
+  .next-game-eyebrow {
+    font-size: 0.78rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 800;
+  }
+
+  .next-game-matchup {
+    margin-top: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+
+  .next-game-meta {
+    margin-top: 0.3rem;
+    font-size: 0.95rem;
+    color: var(--gray-light);
+  }
+
+  .countdown {
+    margin-top: 1.4rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .countdown-unit {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid #2a3f5c;
+    border-radius: 8px;
+    padding: 0.7rem 1rem;
+    min-width: 76px;
+  }
+
+  .countdown-unit .num {
+    font-size: 2rem;
+    font-weight: 900;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+
+  .countdown-unit .label {
+    margin-top: 0.3rem;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gray);
+  }
+
+  .next-game-live {
+    margin-top: 1rem;
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #ff5b5b;
+  }
+
+  @media (max-width: 600px) {
+    .countdown-unit { min-width: 62px; padding: 0.55rem 0.6rem; }
+    .countdown-unit .num { font-size: 1.5rem; }
+    .next-game-matchup { font-size: 1.15rem; }
+  }
+
+  /* SEASON RECORD */
+  .record-bar {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    font-size: 0.88rem;
+    color: var(--gray-light);
+  }
+
+  .record-bar strong {
+    color: var(--white);
+    font-size: 1rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* FILTER TOGGLES */
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .filter-btn {
+    background: transparent;
+    border: 1px solid var(--gray);
+    color: var(--gray-light);
+    padding: 0.45rem 1rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-weight: 700;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: 0.15s ease;
+  }
+
+  .filter-btn:hover {
+    border-color: var(--white);
+  }
+
+  .filter-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--white);
+  }
+
+  /* RIVALRY NOTE */
+  .rivalry-row td {
+    background: #1a1408;
+    border-bottom: 1px solid #1c3455;
+    padding: 0.6rem 1rem;
+    font-size: 0.82rem;
+    color: var(--gray-light);
+    font-style: italic;
+  }
+
+  .rivalry-row .rivalry-label {
+    color: #e8b84b;
+    font-style: normal;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    margin-right: 0.5rem;
+  }
+
+  /* CROSSTOWN SHOOTOUT PULSE */
+  .crosstown-row td {
+    position: relative;
+    animation: crosstownPulse 2.2s ease-in-out infinite;
+  }
+
+  @keyframes crosstownPulse {
+    0%, 100% { box-shadow: inset 0 0 0 1px rgba(232, 184, 75, 0.25); }
+    50% { box-shadow: inset 0 0 0 2px rgba(232, 184, 75, 0.95); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .crosstown-row td {
+      animation: none;
+      box-shadow: inset 0 0 0 2px rgba(232, 184, 75, 0.7);
+    }
+  }
+
   /* SECTION */
   .section {
     padding: 3.5rem 2rem;
@@ -92,34 +364,6 @@
     border-left: 8px solid var(--gray);
     padding-left: 1rem;
   }
-
-  /* LEGEND */
-  .legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.2rem;
-    margin-bottom: 2rem;
-    font-size: 0.85rem;
-    color: var(--gray-light);
-  }
-
-  .legend span {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-  }
-
-  .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    display: inline-block;
-  }
-
-  .dot.conf { background: var(--accent); }
-  .dot.nonconf { background: var(--gray); }
-  .dot.home { border: 2px solid var(--white); background: transparent; }
-  .dot.away { background: var(--white); }
 
   /* SCHEDULE TABLE */
   .schedule-wrap {
@@ -143,6 +387,9 @@
     text-align: left;
     padding: 0.9rem 1rem;
     border-bottom: 2px solid var(--gray);
+    position: sticky;
+    top: 0;
+    z-index: 1;
   }
 
   table.schedule tbody td {
@@ -150,6 +397,10 @@
     font-size: 0.95rem;
     border-bottom: 1px solid #1c3455;
     color: var(--gray-light);
+  }
+
+  table.schedule tbody tr:nth-child(even):not(.month-row):not(.group-row):not(.rivalry-row) {
+    background: rgba(255,255,255,0.02);
   }
 
   table.schedule tbody tr:hover {
@@ -166,23 +417,28 @@
     border-bottom: 2px solid var(--gray);
   }
 
-  .badge {
-    display: inline-block;
-    padding: 0.2rem 0.55rem;
-    border-radius: 3px;
-    font-size: 0.72rem;
+  .opponent-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .opponent-cell img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  .group-row td {
+    background: #16294a;
+    color: var(--gray-light);
     font-weight: 700;
     text-transform: uppercase;
-  }
-
-  .badge.conf {
-    background: var(--accent);
-    color: var(--white);
-  }
-
-  .badge.nonconf {
-    background: #2a3f5c;
-    color: var(--gray-light);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid #1c3455;
   }
 
   .loc {
@@ -191,6 +447,7 @@
 
   .loc.home { color: var(--white); }
   .loc.away { color: var(--gray); }
+  .loc.neutral { color: var(--accent); }
 
   /* TAGS / KEY OPPONENTS */
   .tags {
@@ -257,24 +514,57 @@
 
   <!-- HERO -->
   <section class="hero">
+    <div class="name-tag">Brendan Spears</div>
     <div class="eyebrow">Xavier University Athletics</div>
     <h1>Musketeers <span>Basketball</span></h1>
-    <p>The official-style 2026&ndash;27 men's basketball schedule &mdash; Cincinnati, Ohio.</p>
-    <div class="note">
-      Dates, times, and non-conference opponents below are placeholders until Xavier Athletics
-      releases the official 2026&ndash;27 schedule. Big East opponents are accurate to conference membership.
-    </div>
   </section>
+
+  <!-- PHOTO STRIP -->
+  <div class="photo-strip">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/BlueWhite.jpg" alt="Xavier Musketeers basketball game at Cintas Center" loading="lazy" />
+    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/CintasEmpty.JPG" alt="Cintas Center arena, home of Xavier Musketeers basketball" loading="lazy" />
+  </div>
+
+  <!-- NEXT GAME COUNTDOWN -->
+  <div class="next-game">
+    <div class="next-game-row">
+      <div class="team-badge home">
+        <div class="logo-glow"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2752.png" alt="Xavier Musketeers" /></div>
+        <div class="team-label">Xavier</div>
+      </div>
+
+      <div class="next-game-card" id="next-game-card">
+        <div class="next-game-eyebrow">Next Game</div>
+        <div class="next-game-matchup" id="ng-matchup">Loading schedule&hellip;</div>
+        <div class="next-game-meta" id="ng-meta"></div>
+        <div class="countdown" id="ng-countdown">
+          <div class="countdown-unit"><div class="num" id="ng-days">&ndash;</div><div class="label">Days</div></div>
+          <div class="countdown-unit"><div class="num" id="ng-hours">&ndash;</div><div class="label">Hours</div></div>
+          <div class="countdown-unit"><div class="num" id="ng-mins">&ndash;</div><div class="label">Min</div></div>
+          <div class="countdown-unit"><div class="num" id="ng-secs">&ndash;</div><div class="label">Sec</div></div>
+        </div>
+      </div>
+
+      <div class="team-badge away">
+        <div class="logo-glow"><img id="ng-opp-logo" src="https://a.espncdn.com/i/teamlogos/ncaa/500/116.png" alt="" /></div>
+        <div class="team-label" id="ng-opp-label">&nbsp;</div>
+      </div>
+    </div>
+
+    <div class="record-bar">
+      <span>2026&ndash;27 Record: <strong id="record-overall">0&ndash;0</strong></span>
+      <span>Big East: <strong id="record-conf">0&ndash;0</strong></span>
+    </div>
+  </div>
 
   <!-- SCHEDULE -->
   <section class="section">
     <h2 class="section-title">2026&ndash;27 Schedule</h2>
 
-    <div class="legend">
-      <span><span class="dot conf"></span> Big East Conference</span>
-      <span><span class="dot nonconf"></span> Non-Conference</span>
-      <span><span class="dot home"></span> Home (Cintas Center)</span>
-      <span><span class="dot away"></span> Away</span>
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all" type="button">All Games</button>
+      <button class="filter-btn" data-filter="home" type="button">Home Only</button>
+      <button class="filter-btn" data-filter="conf" type="button">Big East Only</button>
     </div>
 
     <div class="schedule-wrap">
@@ -285,151 +575,235 @@
             <th>Opponent</th>
             <th>Location</th>
             <th>Time (ET)</th>
-            <th>Type</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="month-row"><td colspan="5">November 2026</td></tr>
-          <tr>
-            <td>TBD</td>
-            <td>Exhibition Opponent</td>
+          <tr class="month-row"><td colspan="4">November 2026</td></tr>
+          <tr class="group-row"><td colspan="4">Non-Conference</td></tr>
+          <tr data-idx="0" data-conf="nonconf">
+            <td>Mon, Nov 2</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/116.png" alt="" loading="lazy">Mount St. Mary's</div></td>
             <td class="loc home">Cintas Center</td>
-            <td>TBD</td>
-            <td><span class="badge nonconf">Exhibition</span></td>
+            <td>TBA</td>
           </tr>
-          <tr>
-            <td>TBD</td>
-            <td>Non-Conference Opponent</td>
+          <tr data-idx="1" data-conf="nonconf">
+            <td>Fri, Nov 6</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2199.png" alt="" loading="lazy">Eastern Michigan</div></td>
             <td class="loc home">Cintas Center</td>
-            <td>TBD</td>
-            <td><span class="badge nonconf">Non-Conf</span></td>
+            <td>TBA</td>
           </tr>
-          <tr>
-            <td>TBD</td>
-            <td>Non-Conference Opponent</td>
-            <td class="loc away">Away</td>
-            <td>TBD</td>
-            <td><span class="badge nonconf">Non-Conf</span></td>
+          <tr data-idx="2" data-conf="nonconf">
+            <td>Tue, Nov 10</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2174.png" alt="" loading="lazy">Detroit Mercy</div></td>
+            <td class="loc home">Cintas Center</td>
+            <td>TBA</td>
+          </tr>
+          <tr data-idx="3" data-conf="nonconf">
+            <td>Fri, Nov 13</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/344.png" alt="" loading="lazy">Mississippi State</div></td>
+            <td class="loc neutral">Neutral &mdash; Greenbrier Tip-Off, White Sulphur Springs, WV</td>
+            <td>TBA</td>
+          </tr>
+          <tr data-idx="4" data-conf="nonconf">
+            <td>Tue, Nov 17</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/325.png" alt="" loading="lazy">Cleveland State</div></td>
+            <td class="loc home">Cintas Center</td>
+            <td>TBA</td>
+          </tr>
+          <tr data-idx="5" data-conf="nonconf">
+            <td>Fri, Nov 20</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2294.png" alt="" loading="lazy">Iowa</div></td>
+            <td class="loc home">Cintas Center</td>
+            <td>TBA</td>
+          </tr>
+          <tr data-idx="6" data-conf="nonconf">
+            <td>Wed, Nov 25</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/245.png" alt="" loading="lazy">Texas A&amp;M</div></td>
+            <td class="loc neutral">Neutral &mdash; Battle 4 Atlantis, Paradise Island, Bahamas</td>
+            <td>2:30 PM (ESPN2)</td>
+          </tr>
+          <tr data-idx="7" data-conf="nonconf">
+            <td>Fri, Nov 27</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/258.png" alt="" loading="lazy">Virginia</div></td>
+            <td class="loc neutral">Neutral &mdash; Battle 4 Atlantis, Paradise Island, Bahamas</td>
+            <td>11:00 AM (ESPN2)</td>
           </tr>
 
-          <tr class="month-row"><td colspan="5">December 2026</td></tr>
-          <tr>
-            <td>TBD</td>
-            <td>Crosstown Rival &mdash; Cincinnati</td>
+          <tr class="month-row"><td colspan="4">December 2026</td></tr>
+          <tr class="group-row"><td colspan="4">Non-Conference</td></tr>
+          <tr data-idx="8" data-conf="nonconf">
+            <td>Wed, Dec 2</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2640.png" alt="" loading="lazy">Texas Southern</div></td>
             <td class="loc home">Cintas Center</td>
-            <td>TBD</td>
-            <td><span class="badge nonconf">Non-Conf</span></td>
+            <td>TBA</td>
           </tr>
-          <tr>
-            <td>TBD</td>
-            <td>Non-Conference Opponent</td>
-            <td class="loc away">Away</td>
-            <td>TBD</td>
-            <td><span class="badge nonconf">Non-Conf</span></td>
+          <tr data-idx="9" data-conf="nonconf" class="crosstown-row">
+            <td>Sat, Dec 5</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2132.png" alt="" loading="lazy">Cincinnati &mdash; Crosstown Shootout</div></td>
+            <td class="loc away">Fifth Third Arena, Cincinnati, OH</td>
+            <td>TBA</td>
           </tr>
-          <tr>
-            <td>TBD</td>
-            <td>Butler</td>
+          <tr class="rivalry-row">
+            <td colspan="4">
+              <span class="rivalry-label">Last Meeting</span>
+              Xavier won 79&ndash;74 at Cintas Center (Dec 5, 2025) &mdash; Cincinnati leads the
+              all-time Crosstown Shootout series 52&ndash;41, with Xavier riding a 1-game win streak.
+            </td>
+          </tr>
+          <tr data-idx="10" data-conf="nonconf">
+            <td>Wed, Dec 9</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2870.png" alt="" loading="lazy">Purdue Fort Wayne</div></td>
             <td class="loc home">Cintas Center</td>
-            <td>TBD</td>
-            <td><span class="badge conf">Big East</span></td>
+            <td>TBA</td>
+          </tr>
+          <tr data-idx="11" data-conf="nonconf">
+            <td>Sat, Dec 12</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2229.png" alt="" loading="lazy">Florida International</div></td>
+            <td class="loc home">Cintas Center</td>
+            <td>TBA</td>
+          </tr>
+          <tr class="group-row"><td colspan="4">Big East Conference</td></tr>
+          <tr data-idx="12" data-conf="conf">
+            <td>Sat, Dec 19</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/269.png" alt="" loading="lazy">Marquette</div></td>
+            <td class="loc away">Fiserv Forum, Milwaukee, WI</td>
+            <td>TBA</td>
+          </tr>
+          <tr data-idx="13" data-conf="conf">
+            <td>Tue, Dec 22</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/156.png" alt="" loading="lazy">Creighton</div></td>
+            <td class="loc home">Cintas Center</td>
+            <td>TBA</td>
+          </tr>
+          <tr data-idx="14" data-conf="conf">
+            <td>Wed, Dec 30</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/46.png" alt="" loading="lazy">Georgetown</div></td>
+            <td class="loc away">Capital One Arena, Washington, D.C.</td>
+            <td>TBA</td>
           </tr>
 
-          <tr class="month-row"><td colspan="5">January 2027</td></tr>
-          <tr>
-            <td>TBD</td>
-            <td>Creighton</td>
-            <td class="loc away">Away</td>
-            <td>TBD</td>
-            <td><span class="badge conf">Big East</span></td>
-          </tr>
-          <tr>
-            <td>TBD</td>
-            <td>Villanova</td>
+          <tr class="month-row"><td colspan="4">January 2027</td></tr>
+          <tr class="group-row"><td colspan="4">Big East Conference</td></tr>
+          <tr data-idx="15" data-conf="conf">
+            <td>Sat, Jan 2</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2550.png" alt="" loading="lazy">Seton Hall</div></td>
             <td class="loc home">Cintas Center</td>
-            <td>TBD</td>
-            <td><span class="badge conf">Big East</span></td>
+            <td>TBA</td>
           </tr>
-          <tr>
-            <td>TBD</td>
-            <td>Georgetown</td>
-            <td class="loc away">Away</td>
-            <td>TBD</td>
-            <td><span class="badge conf">Big East</span></td>
-          </tr>
-          <tr>
-            <td>TBD</td>
-            <td>Providence</td>
+          <tr data-idx="16" data-conf="conf">
+            <td>Wed, Jan 6</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/222.png" alt="" loading="lazy">Villanova</div></td>
             <td class="loc home">Cintas Center</td>
-            <td>TBD</td>
-            <td><span class="badge conf">Big East</span></td>
+            <td>TBA</td>
           </tr>
-          <tr>
-            <td>TBD</td>
-            <td>UConn</td>
-            <td class="loc away">Away</td>
-            <td>TBD</td>
-            <td><span class="badge conf">Big East</span></td>
+          <tr data-idx="17" data-conf="conf">
+            <td>Sat, Jan 9</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2507.png" alt="" loading="lazy">Providence</div></td>
+            <td class="loc away">Amica Mutual Pavilion, Providence, RI</td>
+            <td>TBA</td>
+          </tr>
+          <tr data-idx="18" data-conf="conf">
+            <td>Tue, Jan 12</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2086.png" alt="" loading="lazy">Butler</div></td>
+            <td class="loc home">Cintas Center</td>
+            <td>TBA</td>
+          </tr>
+          <tr data-idx="19" data-conf="conf">
+            <td>Sat, Jan 16</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/41.png" alt="" loading="lazy">UConn</div></td>
+            <td class="loc away">Harry A. Gampel Pavilion, Storrs, CT</td>
+            <td>TBA</td>
+          </tr>
+          <tr data-idx="20" data-conf="conf">
+            <td>Tue, Jan 19</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/222.png" alt="" loading="lazy">Villanova</div></td>
+            <td class="loc away">Finneran Pavilion, Villanova, PA</td>
+            <td>TBA</td>
+          </tr>
+          <tr data-idx="21" data-conf="conf">
+            <td>Sat, Jan 23</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/269.png" alt="" loading="lazy">Marquette</div></td>
+            <td class="loc home">Cintas Center</td>
+            <td>TBA</td>
+          </tr>
+          <tr data-idx="22" data-conf="conf">
+            <td>Tue, Jan 26</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2599.png" alt="" loading="lazy">St. John's</div></td>
+            <td class="loc home">Cintas Center</td>
+            <td>TBA</td>
+          </tr>
+          <tr data-idx="23" data-conf="conf">
+            <td>Sat, Jan 30</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/305.png" alt="" loading="lazy">DePaul</div></td>
+            <td class="loc away">Wintrust Arena, Chicago, IL</td>
+            <td>TBA</td>
           </tr>
 
-          <tr class="month-row"><td colspan="5">February 2027</td></tr>
-          <tr>
-            <td>TBD</td>
-            <td>St. John's</td>
+          <tr class="month-row"><td colspan="4">February 2027</td></tr>
+          <tr class="group-row"><td colspan="4">Big East Conference</td></tr>
+          <tr data-idx="24" data-conf="conf">
+            <td>Sat, Feb 6</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2086.png" alt="" loading="lazy">Butler</div></td>
+            <td class="loc away">Hinkle Fieldhouse, Indianapolis, IN</td>
+            <td>TBA</td>
+          </tr>
+          <tr data-idx="25" data-conf="conf">
+            <td>Tue, Feb 9</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/46.png" alt="" loading="lazy">Georgetown</div></td>
             <td class="loc home">Cintas Center</td>
-            <td>TBD</td>
-            <td><span class="badge conf">Big East</span></td>
+            <td>TBA</td>
           </tr>
-          <tr>
-            <td>TBD</td>
-            <td>Marquette</td>
-            <td class="loc away">Away</td>
-            <td>TBD</td>
-            <td><span class="badge conf">Big East</span></td>
+          <tr data-idx="26" data-conf="conf">
+            <td>Sat, Feb 13</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2599.png" alt="" loading="lazy">St. John's</div></td>
+            <td class="loc away">Carnesecca Arena, Queens, NY</td>
+            <td>TBA</td>
           </tr>
-          <tr>
-            <td>TBD</td>
-            <td>Seton Hall</td>
+          <tr data-idx="27" data-conf="conf">
+            <td>Sat, Feb 20</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/305.png" alt="" loading="lazy">DePaul</div></td>
             <td class="loc home">Cintas Center</td>
-            <td>TBD</td>
-            <td><span class="badge conf">Big East</span></td>
+            <td>TBA</td>
           </tr>
-          <tr>
-            <td>TBD</td>
-            <td>DePaul</td>
-            <td class="loc away">Away</td>
-            <td>TBD</td>
-            <td><span class="badge conf">Big East</span></td>
+          <tr data-idx="28" data-conf="conf">
+            <td>Wed, Feb 24</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/156.png" alt="" loading="lazy">Creighton</div></td>
+            <td class="loc away">CHI Health Center Omaha, Omaha, NE</td>
+            <td>TBA</td>
           </tr>
-          <tr>
-            <td>TBD</td>
-            <td>Butler</td>
-            <td class="loc away">Away</td>
-            <td>TBD</td>
-            <td><span class="badge conf">Big East</span></td>
+          <tr data-idx="29" data-conf="conf">
+            <td>Sun, Feb 28</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2550.png" alt="" loading="lazy">Seton Hall</div></td>
+            <td class="loc away">Prudential Center, Newark, NJ</td>
+            <td>TBA</td>
           </tr>
 
-          <tr class="month-row"><td colspan="5">March 2027</td></tr>
-          <tr>
-            <td>TBD</td>
-            <td>Creighton</td>
+          <tr class="month-row"><td colspan="4">March 2027</td></tr>
+          <tr class="group-row"><td colspan="4">Big East Conference</td></tr>
+          <tr data-idx="30" data-conf="conf">
+            <td>Wed, Mar 3</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2507.png" alt="" loading="lazy">Providence</div></td>
             <td class="loc home">Cintas Center</td>
-            <td>TBD</td>
-            <td><span class="badge conf">Big East</span></td>
+            <td>TBA</td>
           </tr>
-          <tr>
-            <td>TBD</td>
-            <td>Big East Tournament</td>
-            <td class="loc away">Madison Square Garden, NYC</td>
-            <td>TBD</td>
-            <td><span class="badge conf">Big East</span></td>
+          <tr data-idx="31" data-conf="conf">
+            <td>Sat, Mar 6</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/41.png" alt="" loading="lazy">UConn</div></td>
+            <td class="loc home">Cintas Center</td>
+            <td>TBA</td>
           </tr>
-          <tr>
+          <tr class="group-row"><td colspan="4">Postseason</td></tr>
+          <tr data-conf="conf">
+            <td>TBD</td>
+            <td><div class="opponent-cell"><img src="https://a.espncdn.com/i/teamlogos/ncaa_conf/500/big_east.png" alt="" loading="lazy">Big East Tournament</div></td>
+            <td class="loc neutral">Neutral &mdash; Madison Square Garden, NYC</td>
+            <td>TBA</td>
+          </tr>
+          <tr data-conf="nonconf">
             <td>TBD</td>
             <td>NCAA Tournament</td>
-            <td class="loc away">TBD</td>
-            <td>TBD</td>
-            <td><span class="badge nonconf">Postseason</span></td>
+            <td class="loc neutral">Neutral &mdash; Site TBD</td>
+            <td>TBA</td>
           </tr>
         </tbody>
       </table>
@@ -450,8 +824,259 @@
   </section>
 
   <footer>
-    Go Musketeers &middot; Cincinnati, OH &middot; Schedule template for 2026&ndash;27 season
+    Go Musketeers &middot; Cincinnati, OH &middot; 2026&ndash;27 schedule via ESPN
   </footer>
+
+  <script>
+    // All ESPN-posted games fall between Nov 2026 and Mar 2027, entirely within
+    // Eastern Standard Time (UTC-5) — no DST transition occurs in that window.
+    var GAMES = [
+      { date: "2026-11-02T19:00:00-05:00", opp: "Mount St. Mary's", loc: "Cintas Center", tba: true, conf: false },
+      { date: "2026-11-06T19:00:00-05:00", opp: "Eastern Michigan", loc: "Cintas Center", tba: true, conf: false },
+      { date: "2026-11-10T19:00:00-05:00", opp: "Detroit Mercy", loc: "Cintas Center", tba: true, conf: false },
+      { date: "2026-11-13T19:00:00-05:00", opp: "Mississippi State", loc: "Greenbrier Tip-Off, White Sulphur Springs, WV", tba: true, conf: false },
+      { date: "2026-11-17T19:00:00-05:00", opp: "Cleveland State", loc: "Cintas Center", tba: true, conf: false },
+      { date: "2026-11-20T19:00:00-05:00", opp: "Iowa", loc: "Cintas Center", tba: true, conf: false },
+      { date: "2026-11-25T14:30:00-05:00", opp: "Texas A&M", loc: "Battle 4 Atlantis, Bahamas", tba: false, conf: false },
+      { date: "2026-11-27T11:00:00-05:00", opp: "Virginia", loc: "Battle 4 Atlantis, Bahamas", tba: false, conf: false },
+      { date: "2026-12-02T19:00:00-05:00", opp: "Texas Southern", loc: "Cintas Center", tba: true, conf: false },
+      { date: "2026-12-05T19:00:00-05:00", opp: "Cincinnati", loc: "Fifth Third Arena, Cincinnati, OH", tba: true, conf: false },
+      { date: "2026-12-09T19:00:00-05:00", opp: "Purdue Fort Wayne", loc: "Cintas Center", tba: true, conf: false },
+      { date: "2026-12-12T19:00:00-05:00", opp: "Florida International", loc: "Cintas Center", tba: true, conf: false },
+      { date: "2026-12-19T19:00:00-05:00", opp: "Marquette", loc: "Fiserv Forum, Milwaukee, WI", tba: true, conf: true },
+      { date: "2026-12-22T19:00:00-05:00", opp: "Creighton", loc: "Cintas Center", tba: true, conf: true },
+      { date: "2026-12-30T19:00:00-05:00", opp: "Georgetown", loc: "Capital One Arena, Washington, D.C.", tba: true, conf: true },
+      { date: "2027-01-02T19:00:00-05:00", opp: "Seton Hall", loc: "Cintas Center", tba: true, conf: true },
+      { date: "2027-01-06T19:00:00-05:00", opp: "Villanova", loc: "Cintas Center", tba: true, conf: true },
+      { date: "2027-01-09T19:00:00-05:00", opp: "Providence", loc: "Amica Mutual Pavilion, Providence, RI", tba: true, conf: true },
+      { date: "2027-01-12T19:00:00-05:00", opp: "Butler", loc: "Cintas Center", tba: true, conf: true },
+      { date: "2027-01-16T19:00:00-05:00", opp: "UConn", loc: "Harry A. Gampel Pavilion, Storrs, CT", tba: true, conf: true },
+      { date: "2027-01-19T19:00:00-05:00", opp: "Villanova", loc: "Finneran Pavilion, Villanova, PA", tba: true, conf: true },
+      { date: "2027-01-23T19:00:00-05:00", opp: "Marquette", loc: "Cintas Center", tba: true, conf: true },
+      { date: "2027-01-26T19:00:00-05:00", opp: "St. John's", loc: "Cintas Center", tba: true, conf: true },
+      { date: "2027-01-30T19:00:00-05:00", opp: "DePaul", loc: "Wintrust Arena, Chicago, IL", tba: true, conf: true },
+      { date: "2027-02-06T19:00:00-05:00", opp: "Butler", loc: "Hinkle Fieldhouse, Indianapolis, IN", tba: true, conf: true },
+      { date: "2027-02-09T19:00:00-05:00", opp: "Georgetown", loc: "Cintas Center", tba: true, conf: true },
+      { date: "2027-02-13T19:00:00-05:00", opp: "St. John's", loc: "Carnesecca Arena, Queens, NY", tba: true, conf: true },
+      { date: "2027-02-20T19:00:00-05:00", opp: "DePaul", loc: "Cintas Center", tba: true, conf: true },
+      { date: "2027-02-24T19:00:00-05:00", opp: "Creighton", loc: "CHI Health Center Omaha, Omaha, NE", tba: true, conf: true },
+      { date: "2027-02-28T19:00:00-05:00", opp: "Seton Hall", loc: "Prudential Center, Newark, NJ", tba: true, conf: true },
+      { date: "2027-03-03T19:00:00-05:00", opp: "Providence", loc: "Cintas Center", tba: true, conf: true },
+      { date: "2027-03-06T19:00:00-05:00", opp: "UConn", loc: "Cintas Center", tba: true, conf: true }
+    ];
+
+    // ESPN team-logo CDN ids, keyed by the same opponent names used in GAMES.
+    var OPP_LOGOS = {
+      "Mount St. Mary's": 116,
+      "Eastern Michigan": 2199,
+      "Detroit Mercy": 2174,
+      "Mississippi State": 344,
+      "Cleveland State": 325,
+      "Iowa": 2294,
+      "Texas A&M": 245,
+      "Virginia": 258,
+      "Texas Southern": 2640,
+      "Cincinnati": 2132,
+      "Purdue Fort Wayne": 2870,
+      "Florida International": 2229,
+      "Marquette": 269,
+      "Creighton": 156,
+      "Georgetown": 46,
+      "Seton Hall": 2550,
+      "Villanova": 222,
+      "Providence": 2507,
+      "Butler": 2086,
+      "UConn": 41,
+      "St. John's": 2599,
+      "DePaul": 305
+    };
+
+    var GAME_LENGTH_MS = 2.5 * 60 * 60 * 1000; // assume ~2.5hr game for "live now" window
+
+    function pick(games, now) {
+      for (var i = 0; i < games.length; i++) {
+        var start = new Date(games[i].date).getTime();
+        if (now < start + GAME_LENGTH_MS) return games[i];
+      }
+      return null;
+    }
+
+    function fmtTime(game) {
+      if (game.tba) return "Time TBA";
+      var d = new Date(game.date);
+      return d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", timeZone: "America/New_York" }) + " ET";
+    }
+
+    function fmtDate(game) {
+      var d = new Date(game.date);
+      return d.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", timeZone: "America/New_York" });
+    }
+
+    function tick() {
+      var now = Date.now();
+      var game = pick(GAMES, now);
+      var matchupEl = document.getElementById("ng-matchup");
+      var metaEl = document.getElementById("ng-meta");
+      var d = document.getElementById("ng-days");
+      var h = document.getElementById("ng-hours");
+      var m = document.getElementById("ng-mins");
+      var s = document.getElementById("ng-secs");
+
+      if (!game) {
+        matchupEl.textContent = "See you next season";
+        metaEl.textContent = "The 2026–27 schedule has wrapped.";
+        d.textContent = h.textContent = m.textContent = s.textContent = "0";
+        return;
+      }
+
+      var start = new Date(game.date).getTime();
+      var diff = start - now;
+
+      matchupEl.textContent = "Xavier vs. " + game.opp;
+
+      var oppLogoEl = document.getElementById("ng-opp-logo");
+      var oppLabelEl = document.getElementById("ng-opp-label");
+      var logoId = OPP_LOGOS[game.opp];
+      if (oppLogoEl && logoId) {
+        var logoUrl = "https://a.espncdn.com/i/teamlogos/ncaa/500/" + logoId + ".png";
+        if (oppLogoEl.getAttribute("src") !== logoUrl) {
+          oppLogoEl.src = logoUrl;
+          oppLogoEl.alt = game.opp;
+        }
+      }
+      if (oppLabelEl) oppLabelEl.textContent = game.opp;
+
+      if (diff <= 0) {
+        metaEl.textContent = game.loc + " — LIVE NOW";
+        d.textContent = h.textContent = m.textContent = s.textContent = "0";
+        return;
+      }
+
+      metaEl.textContent = fmtDate(game) + " — " + game.loc + " — " + fmtTime(game);
+
+      var days = Math.floor(diff / 86400000);
+      var hours = Math.floor((diff % 86400000) / 3600000);
+      var mins = Math.floor((diff % 3600000) / 60000);
+      var secs = Math.floor((diff % 60000) / 1000);
+
+      d.textContent = days;
+      h.textContent = String(hours).padStart(2, "0");
+      m.textContent = String(mins).padStart(2, "0");
+      s.textContent = String(secs).padStart(2, "0");
+    }
+
+    tick();
+    setInterval(tick, 1000);
+
+    // Live sync: pull the real ESPN schedule feed and replace any "TBA" time
+    // the moment Xavier/ESPN officially announces it — no manual edits needed.
+    function normalizeName(s) {
+      return s.toLowerCase().replace(/[^a-z0-9]/g, "");
+    }
+
+    function namesMatch(a, b) {
+      var na = normalizeName(a), nb = normalizeName(b);
+      return na.indexOf(nb) !== -1 || nb.indexOf(na) !== -1;
+    }
+
+    function syncLiveSchedule() {
+      fetch("https://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/teams/2752/schedule?seasontype=2")
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          var events = data && data.events;
+          if (!events || !events.length) return;
+
+          events.forEach(function (event, i) {
+            var game = GAMES[i];
+            if (!game) return;
+
+            var comp = event.competitions && event.competitions[0];
+            if (!comp) return;
+
+            var opponent = comp.competitors.find(function (c) { return c.team.id !== "2752"; });
+            if (!opponent || !namesMatch(opponent.team.displayName, game.opp)) return; // don't touch on any mismatch
+
+            if (!comp.timeValid) return; // still TBA per ESPN — leave as-is
+
+            game.date = event.date;
+            game.tba = false;
+
+            var broadcast = comp.broadcasts && comp.broadcasts[0] && comp.broadcasts[0].names && comp.broadcasts[0].names[0];
+            var row = document.querySelector('tr[data-idx="' + i + '"]');
+            if (row) {
+              var timeCell = row.querySelector("td:last-child");
+              if (timeCell) {
+                timeCell.textContent = fmtTime(game) + (broadcast ? " (" + broadcast + ")" : "");
+              }
+            }
+          });
+
+          // Season record: tally completed games straight from the live feed.
+          var w = 0, l = 0, cw = 0, cl = 0;
+          events.forEach(function (event, i) {
+            var game = GAMES[i];
+            if (!game) return;
+            var comp = event.competitions && event.competitions[0];
+            if (!comp || !comp.status || !comp.status.type || !comp.status.type.completed) return;
+            var xu = comp.competitors.find(function (c) { return c.team.id === "2752"; });
+            if (!xu || typeof xu.winner !== "boolean") return;
+            if (xu.winner) { w++; if (game.conf) cw++; }
+            else { l++; if (game.conf) cl++; }
+          });
+          var overallEl = document.getElementById("record-overall");
+          var confEl = document.getElementById("record-conf");
+          if (overallEl) overallEl.textContent = w + "–" + l;
+          if (confEl) confEl.textContent = cw + "–" + cl;
+
+          tick(); // reflect any newly-announced time in the countdown immediately
+        })
+        .catch(function () {
+          // Offline or the feed is unreachable — the static TBA schedule stays as the fallback.
+        });
+    }
+
+    syncLiveSchedule();
+    setInterval(syncLiveSchedule, 30 * 60 * 1000); // re-check every 30 min for newly announced times
+
+    // Schedule filters: Home Only / Big East Only, with headers/rivalry note
+    // hidden or shown to match whatever games remain visible.
+    function applyFilter(mode) {
+      var rows = Array.prototype.slice.call(document.querySelectorAll(".schedule tbody tr"));
+      var lastGameVisible = true;
+
+      rows.forEach(function (row) {
+        if (row.hasAttribute("data-conf")) {
+          var show = true;
+          if (mode === "home") show = row.querySelector(".loc.home") !== null;
+          else if (mode === "conf") show = row.getAttribute("data-conf") === "conf";
+          row.style.display = show ? "" : "none";
+          lastGameVisible = show;
+        } else if (row.classList.contains("rivalry-row")) {
+          row.style.display = lastGameVisible ? "" : "none";
+        }
+      });
+
+      rows.forEach(function (row, idx) {
+        if (!row.classList.contains("month-row") && !row.classList.contains("group-row")) return;
+        var hasVisible = false;
+        for (var j = idx + 1; j < rows.length; j++) {
+          var r = rows[j];
+          if (r.classList.contains("month-row") || r.classList.contains("group-row")) break;
+          if (r.hasAttribute("data-conf") && r.style.display !== "none") { hasVisible = true; break; }
+        }
+        row.style.display = hasVisible ? "" : "none";
+      });
+    }
+
+    var filterBtns = document.querySelectorAll(".filter-btn");
+    filterBtns.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        filterBtns.forEach(function (b) { b.classList.remove("active"); });
+        btn.classList.add("active");
+        applyFilter(btn.getAttribute("data-filter"));
+      });
+    });
+  </script>
 
 </body>
 </html>
