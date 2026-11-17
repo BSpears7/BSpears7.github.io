@@ -181,7 +181,7 @@ footer { padding-block: 28px; border-top: 1px solid var(--line); color: var(--mu
       </div>
     </div>
     <div class="video-slot">
-      <video id="ad" src="callout-ad.mp4" controls playsinline muted preload="metadata" aria-label="Call-Out Rescue 14-second ad" hidden></video>
+      <video id="ad" src="callout-ad.mp4" autoplay loop muted playsinline controls preload="auto" aria-label="Call-Out Rescue 14-second ad" hidden></video>
       <div class="video-soon" id="ad-soon">
         <span class="play" aria-hidden="true"></span>
         <p>14-second ad coming soon</p>
@@ -342,7 +342,12 @@ footer { padding-block: 28px; border-top: 1px solid var(--line); color: var(--mu
 
   // Show the ad once callout-ad.mp4 is in this folder; until then the "coming soon" card stays.
   var ad = document.getElementById("ad");
-  ad.addEventListener("loadedmetadata", function () { ad.hidden = false; document.getElementById("ad-soon").hidden = true; });
+  ad.addEventListener("loadedmetadata", function () {
+    ad.hidden = false;
+    document.getElementById("ad-soon").hidden = true;
+    var p = ad.play();
+    if (p && p.catch) p.catch(function () {});
+  });
   ad.load();
 })();
 </script>
