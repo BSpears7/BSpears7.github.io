@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Call-Out Rescue</title>
+<meta name="description" content="Call-Out Rescue texts your open shift to every available employee at once. First to accept holds it, you approve, and everyone knows who's coming in.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: a landing page that leads into a working demo of one call-out, morning-shift palette */
+:root {
+  --bg: #f5f6f8;
+  --surface: #ffffff;
+  --ink: #16202b;
+  --muted: #586472;
+  --line: #dce1e7;
+  --accent: #d9481f;
+  --accent-ink: #ffffff;
+  --accent-soft: #fde7df;
+  --ok: #1d7f47;
+  --ok-soft: #dcf1e4;
+  --warn: #9a5b00;
+  --warn-soft: #fbefd5;
+  --bubble: #e8ecf1;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #10151b; --surface: #19212a; --ink: #edf1f5; --muted: #9aa6b3; --line: #2a3541;
+    --accent: #ff7a50; --accent-ink: #1b0c06; --accent-soft: #3a2118;
+    --ok: #5fd08e; --ok-soft: #163024; --warn: #f0b357; --warn-soft: #33290f; --bubble: #26313d;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #10151b; --surface: #19212a; --ink: #edf1f5; --muted: #9aa6b3; --line: #2a3541;
+  --accent: #ff7a50; --accent-ink: #1b0c06; --accent-soft: #3a2118;
+  --ok: #5fd08e; --ok-soft: #163024; --warn: #f0b357; --warn-soft: #33290f; --bubble: #26313d;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.55; }
+img, video { max-width: 100%; }
+[hidden] { display: none !important; }
+
+/* Name label, small and top-left */
+.name-tag { padding-top: 12px; font-size: 0.85rem; font-weight: 600; color: var(--muted); letter-spacing: 0.02em; }
+
+/* Ad video slot */
+.video-slot { justify-self: center; width: 100%; max-width: 300px; aspect-ratio: 9 / 16; border-radius: 24px; overflow: hidden; background: #172231; border: 1px solid var(--line); box-shadow: 0 18px 40px -24px rgba(16, 24, 32, 0.45); position: relative; }
+.video-slot video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.video-soon { position: absolute; inset: 0; display: grid; place-content: center; gap: 10px; padding: 24px; text-align: center; color: #eef2f6; }
+.video-soon .play { width: 64px; height: 64px; border-radius: 50%; background: #ff7a50; margin: 0 auto; display: grid; place-items: center; }
+.video-soon .play::before { content: ""; border-left: 20px solid #172231; border-top: 12px solid transparent; border-bottom: 12px solid transparent; margin-left: 5px; }
+.video-soon p { margin: 0; font-weight: 600; }
+.video-soon small { color: #9aa6b3; }
+.wrap { max-width: 1080px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--display); line-height: 1.1; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+.mono { font-family: var(--mono); font-size: 0.82rem; font-variant-numeric: tabular-nums; }
+.eyebrow { font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; color: var(--muted); }
+
+.btn { font: 600 1rem var(--body); border: 0; border-radius: 10px; padding: 12px 18px; cursor: pointer; background: var(--accent); color: var(--accent-ink); text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+.btn:hover { filter: brightness(1.06); }
+.btn.ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--line); }
+.btn.ok { background: var(--ok); color: var(--surface); }
+.btn.small { padding: 8px 14px; font-size: 0.92rem; }
+.btn:focus-visible, a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.btn[disabled] { opacity: 0.45; cursor: not-allowed; }
+
+/* Top bar */
+.top { padding-block: 20px; }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.brand { font-family: var(--display); font-weight: 800; font-size: 1.15rem; display: flex; align-items: center; gap: 10px; }
+.brand-mark { width: 28px; height: 28px; border-radius: 8px; background: var(--accent); display: grid; place-items: center; color: var(--accent-ink); font-size: 0.9rem; }
+.for { color: var(--muted); font-size: 0.9rem; }
+
+/* Hero */
+.hero { padding-block: 40px 64px; }
+.hero .wrap { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 48px; align-items: center; }
+.hero h1 { font-size: clamp(2.3rem, 5.5vw, 4rem); font-weight: 800; letter-spacing: -0.02em; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero .sub { margin-top: 20px; font-size: 1.15rem; color: var(--muted); max-width: 52ch; }
+.hero .actions { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; }
+
+.phone { background: var(--surface); border: 1px solid var(--line); border-radius: 28px; padding: 18px 16px 22px; max-width: 320px; width: 100%; justify-self: center; box-shadow: 0 18px 40px -24px rgba(16, 24, 32, 0.45); }
+.phone-head { display: flex; justify-content: space-between; color: var(--muted); padding: 0 6px 14px; border-bottom: 1px solid var(--line); margin-bottom: 14px; }
+.sender { font-weight: 600; font-size: 0.85rem; color: var(--muted); padding-left: 6px; margin-bottom: 6px; }
+.bubble { background: var(--bubble); border-radius: 16px 16px 16px 4px; padding: 12px 14px; font-size: 0.95rem; }
+.bubble strong { display: block; }
+.phone .claim { margin-top: 14px; width: 100%; justify-content: center; }
+.phone .after { margin-top: 10px; text-align: center; color: var(--muted); font-size: 0.85rem; }
+
+/* Quote */
+.problem { padding-block: 56px; background: var(--surface); border-block: 1px solid var(--line); }
+.problem blockquote { margin: 16px 0 0; font-family: var(--display); font-weight: 600; font-size: clamp(1.3rem, 2.6vw, 1.75rem); line-height: 1.35; max-width: 36em; }
+.problem cite { display: block; margin-top: 16px; font-style: normal; color: var(--muted); font-size: 0.95rem; }
+
+/* Benefits */
+.helps { padding-block: 64px; }
+.helps h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
+.helps-grid { margin-top: 28px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+.help h3 { font-size: 1.2rem; margin-bottom: 8px; }
+.help p { color: var(--muted); }
+.help .tick { font-family: var(--mono); color: var(--accent); font-size: 0.85rem; margin-bottom: 10px; display: block; }
+
+/* Demo */
+.demo { padding-block: 64px 80px; background: var(--surface); border-top: 1px solid var(--line); }
+.demo-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px; }
+.demo-head h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
+.demo-head p { color: var(--muted); margin-top: 8px; max-width: 56ch; }
+.guide { margin-top: 24px; padding: 14px 18px; border-radius: 12px; background: var(--accent-soft); font-weight: 500; }
+.guide b { font-family: var(--mono); font-weight: 500; font-size: 0.82rem; margin-right: 8px; }
+.demo-grid { margin-top: 24px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 24px; align-items: start; }
+.panel { border: 1px solid var(--line); border-radius: 16px; padding: 20px; background: var(--bg); min-width: 0; }
+.panel-title { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 16px; }
+.shift { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: grid; gap: 12px; }
+.shift-top { display: flex; justify-content: space-between; align-items: start; gap: 12px; flex-wrap: wrap; }
+.shift-name { font-weight: 600; font-size: 1.05rem; }
+.pill { font-size: 0.78rem; font-weight: 600; padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
+.pill.need { background: var(--accent-soft); color: var(--accent); }
+.pill.wait { background: var(--warn-soft); color: var(--warn); }
+.pill.done { background: var(--ok-soft); color: var(--ok); }
+.muted { color: var(--muted); }
+.warning { background: var(--warn-soft); color: var(--warn); border-radius: 8px; padding: 10px 12px; font-size: 0.92rem; font-weight: 500; }
+.row { display: flex; flex-wrap: wrap; gap: 10px; }
+.timer { color: var(--ok); }
+
+.staff-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.mini { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.mini-name { font-weight: 600; }
+.mini-meta { font-size: 0.82rem; color: var(--muted); }
+.mini .bubble { font-size: 0.85rem; padding: 10px 12px; }
+.status { font-size: 0.85rem; font-weight: 500; }
+.status.ok { color: var(--ok); }
+.status.wait { color: var(--warn); }
+
+.next { padding-block: 56px; }
+.next .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px; }
+.next h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+footer { padding-block: 28px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.85rem; }
+
+@media (max-width: 820px) {
+  .hero .wrap, .demo-grid { grid-template-columns: 1fr; }
+  .video-slot { order: -1; max-width: 260px; }
+  .helps-grid { grid-template-columns: 1fr; gap: 20px; }
+  .for { display: none; }
+}
+@media (max-width: 460px) {
+  .staff-list { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+  .shift, .mini { transition: border-color 0.2s; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap"><div class="name-tag">Brendan Spears</div></div>
+<header class="top">
+  <div class="wrap">
+    <div class="brand"><span class="brand-mark" aria-hidden="true">✓</span>Call-Out Rescue</div>
+    <span class="for">For restaurant and retail shift managers</span>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <h1>Tap one button and <em>cover a shift.</em></h1>
+      <p class="sub">Call-Out Rescue sends your open shift to every available employee at once. The first to accept holds it, you approve, and everyone knows who's coming in.</p>
+      <div class="actions">
+        <a class="btn" href="#demo">Try the demo</a>
+        <a class="btn ghost" href="#how">How it works</a>
+      </div>
+    </div>
+    <div class="video-slot">
+      <video id="ad" src="callout-ad.mp4" controls playsinline muted preload="metadata" aria-label="Call-Out Rescue 14-second ad" hidden></video>
+      <div class="video-soon" id="ad-soon">
+        <span class="play" aria-hidden="true"></span>
+        <p>14-second ad coming soon</p>
+        <small>Someone called out. One tap finds cover.</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="problem">
+  <div class="wrap">
+    <p class="eyebrow">Sound familiar?</p>
+    <blockquote>"It's 6am, I'm trying to open, and Jordan texts me he's sick. So now I'm texting people one by one, posting in the group chat, calling whoever usually says yes. Half of them are asleep. Then two people both say they'll come in, or nobody answers and I end up working the floor myself. Some mornings it eats a whole hour."</blockquote>
+    <cite>A shift manager, before the store even opens</cite>
+  </div>
+</section>
+
+<section class="helps" id="how">
+  <div class="wrap">
+    <h2>How it helps</h2>
+    <div class="helps-grid">
+      <div class="help">
+        <span class="tick">1 tap → every available employee</span>
+        <h3>Everyone at once</h3>
+        <p>One tap texts every available employee, so you're not waiting on replies one at a time.</p>
+      </div>
+      <div class="help">
+        <span class="tick">first yes holds the shift</span>
+        <h3>One clear answer</h3>
+        <p>The first person to accept holds the shift, so there are no double-yeses and everyone can see who's coming in.</p>
+      </div>
+      <div class="help">
+        <span class="tick">reminder every 15 min</span>
+        <h3>You stay in control</h3>
+        <p>You approve who covers, and the app reminds you every 15 minutes until the shift is filled.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="demo" id="demo">
+  <div class="wrap">
+    <div class="demo-head">
+      <div>
+        <p class="eyebrow">Demo · Corner Diner · Saturday</p>
+        <h2>Cover Jordan's 7am shift</h2>
+        <p>Play both sides: the manager on the left, the staff phones on the right. All names are made up.</p>
+      </div>
+      <button class="btn ghost small" type="button" id="reset">Start over</button>
+    </div>
+
+    <div class="guide" id="guide" aria-live="polite"></div>
+
+    <div class="demo-grid">
+      <div class="panel">
+        <div class="panel-title"><h3>Manager · Maria Lopez</h3><span class="mono muted">Open Shifts</span></div>
+        <div class="shift" id="manager"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-title"><h3>Staff phones</h3><span class="mono muted">available today</span></div>
+        <div class="staff-list" id="staff"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="next">
+  <div class="wrap">
+    <h2>Got a call-out this morning? See how fast it could be covered.</h2>
+    <a class="btn" href="#demo">Try the demo</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Call-Out Rescue is a student prototype. The demo uses a made-up restaurant and made-up staff.</div>
+</footer>
+
+<script>
+(function () {
+  var staff = [
+    { id: "tyler", name: "Tyler Brooks", pos: "Server", other: null },
+    { id: "aisha", name: "Aisha Khan", pos: "Server", other: "3pm–11pm" },
+    { id: "chris", name: "Chris Patel", pos: "Cook", other: "3pm–11pm" },
+    { id: "leo", name: "Leo Martinez", pos: "Dishwasher", other: "3pm–11pm" }
+  ];
+  var s;
+  function fresh() { s = { phase: "open", claimer: null, declined: [], started: 0, took: 0 }; }
+  fresh();
+
+  function byId(id) { for (var i = 0; i < staff.length; i++) if (staff[i].id === id) return staff[i]; return null; }
+  function asked() { return staff.filter(function (p) { return s.declined.indexOf(p.id) === -1; }); }
+  function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function took(sec) { return sec < 60 ? sec + " seconds" : Math.floor(sec / 60) + " min " + (sec % 60) + " sec"; }
+
+  var guide = document.getElementById("guide");
+  var mgr = document.getElementById("manager");
+  var list = document.getElementById("staff");
+
+  function render() {
+    var c = s.claimer ? byId(s.claimer) : null;
+    var g = {
+      open: "<b>Step 1 of 3</b>You're the manager. Jordan just called out sick. Tap <strong>Find cover</strong>.",
+      sent: "<b>Step 2 of 3</b>Now you're a staff member. Pick anyone on the right and tap <strong>I'll take it</strong>.",
+      claimed: "<b>Step 3 of 3</b>Back to the manager. <strong>Approve</strong> or <strong>Decline</strong>. Watch for the double-shift warning.",
+      filled: "<b>Done</b>The shift is covered, and everyone can see who's coming in."
+    }[s.phase];
+    guide.innerHTML = g;
+
+    var pill = { open: '<span class="pill need">Needs cover</span>', sent: '<span class="pill wait">Texts sent · waiting</span>', claimed: '<span class="pill wait">Claimed · needs approval</span>', filled: '<span class="pill done">Filled</span>' }[s.phase];
+    var h = '<div class="shift-top"><div><div class="shift-name">Server · 7am–3pm</div><div class="mono muted">Saturday</div></div>' + pill + '</div>';
+    if (s.phase === "open") {
+      h += '<p>Jordan Reed called out. Reason: <strong>sick</strong>. <span class="mono muted">6:02 AM</span></p>';
+      h += '<div class="row"><button class="btn" type="button" data-act="find">Find cover</button></div>';
+    } else if (s.phase === "sent") {
+      var n = asked().length;
+      if (n) {
+        h += '<p>Texts sent to ' + n + ' available staff at <span class="mono">6:04 AM</span>.</p>';
+        h += '<p class="muted">Nobody has claimed it yet. You\'ll get a reminder at <span class="mono">6:19 AM</span>, then every 15 minutes.</p>';
+      } else {
+        h += '<p>Everyone available has been asked and declined.</p><p class="muted">You may need to cover this shift yourself.</p>';
+      }
+      if (s.declined.length) h += '<p class="muted">Declined: ' + s.declined.map(function (id) { return esc(byId(id).name); }).join(", ") + '. The shift reopened for everyone else.</p>';
+    } else if (s.phase === "claimed") {
+      h += '<p><strong>' + esc(c.name) + '</strong> (' + esc(c.pos) + ') wants to cover this shift.</p>';
+      if (c.other) h += '<div class="warning">Also working ' + esc(c.other) + ' today. Approving means a 16-hour day.</div>';
+      h += '<div class="row"><button class="btn ok" type="button" data-act="approve">Approve</button><button class="btn ghost" type="button" data-act="decline">Decline</button></div>';
+    } else {
+      h += '<p><strong>' + esc(c.name) + '</strong> is covering. Everyone can see it.</p>';
+      h += '<p class="mono timer">Filled ' + took(s.took) + ' after you tapped Find cover</p>';
+    }
+    mgr.innerHTML = h;
+
+    list.innerHTML = staff.map(function (p) {
+      var out = '<div class="mini"><div><div class="mini-name">' + esc(p.name) + '</div><div class="mini-meta">' + esc(p.pos) + ' · ' + (p.other ? "works " + esc(p.other) : "off today") + '</div></div>';
+      if (s.phase === "open") return out + '<p class="mini-meta">No messages yet.</p></div>';
+      out += '<div class="bubble"><strong>Open shift: today, 7am–3pm, Server.</strong>Tap to claim.</div>';
+      var declined = s.declined.indexOf(p.id) !== -1;
+      if (declined && s.phase !== "filled") out += '<p class="status">Not approved this time.</p>';
+      else if (s.phase === "sent") out += '<button class="btn small" type="button" data-act="claim" data-id="' + p.id + '">I\'ll take it</button>';
+      else if (s.phase === "claimed") out += s.claimer === p.id ? '<p class="status wait">Waiting for manager approval.</p>' : '<p class="status">Claimed by ' + esc(c.name) + '. Waiting for approval.</p>';
+      else out += s.claimer === p.id ? '<p class="status ok">You\'ve got it. See you at 7am.</p>' : '<p class="status">Already covered by ' + esc(c.name) + '.</p>';
+      return out + '</div>';
+    }).join("");
+  }
+
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-act]");
+    if (!b) return;
+    var a = b.getAttribute("data-act");
+    if (a === "find") { s.phase = "sent"; s.started = Date.now(); }
+    else if (a === "claim" && s.phase === "sent") { s.claimer = b.getAttribute("data-id"); s.phase = "claimed"; }
+    else if (a === "approve") { s.phase = "filled"; s.took = Math.max(1, Math.round((Date.now() - s.started) / 1000)); }
+    else if (a === "decline") { s.declined.push(s.claimer); s.claimer = null; s.phase = "sent"; }
+    render();
+  });
+  document.getElementById("reset").addEventListener("click", function () { fresh(); render(); });
+  render();
+
+  // Show the ad once callout-ad.mp4 is in this folder; until then the "coming soon" card stays.
+  var ad = document.getElementById("ad");
+  ad.addEventListener("loadedmetadata", function () { ad.hidden = false; document.getElementById("ad-soon").hidden = true; });
+  ad.load();
+})();
+</script>
+</body>
+</html>
