@@ -72,6 +72,8 @@ p { margin: 0; }
 .btn.small { padding: 8px 14px; font-size: 0.92rem; }
 .btn:focus-visible, a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 .btn[disabled] { opacity: 0.45; cursor: not-allowed; }
+.btn.ghost[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+.reasons { display: flex; flex-wrap: wrap; gap: 8px; }
 
 /* Top bar */
 .top { padding-block: 20px; }
@@ -126,6 +128,7 @@ p { margin: 0; }
 .pill.need { background: var(--accent-soft); color: var(--accent); }
 .pill.wait { background: var(--warn-soft); color: var(--warn); }
 .pill.done { background: var(--ok-soft); color: var(--ok); }
+.pill.plain { background: var(--bubble); color: var(--muted); }
 .muted { color: var(--muted); }
 .warning { background: var(--warn-soft); color: var(--warn); border-radius: 8px; padding: 10px 12px; font-size: 0.92rem; font-weight: 500; }
 .row { display: flex; flex-wrap: wrap; gap: 10px; }
@@ -228,7 +231,7 @@ footer { padding-block: 28px; border-top: 1px solid var(--line); color: var(--mu
       <div>
         <p class="eyebrow">Demo · Corner Diner · Saturday</p>
         <h2>Cover Jordan's 7am shift</h2>
-        <p>Play both sides: the manager on the left, the staff phones on the right. All names are made up.</p>
+        <p>Play every role: Jordan calling out sick, the manager on the left, and the staff phones on the right. All names are made up.</p>
       </div>
       <button class="btn ghost small" type="button" id="reset">Start over</button>
     </div>
@@ -237,7 +240,7 @@ footer { padding-block: 28px; border-top: 1px solid var(--line); color: var(--mu
 
     <div class="demo-grid">
       <div class="panel">
-        <div class="panel-title"><h3>Manager · Maria Lopez</h3><span class="mono muted">Open Shifts</span></div>
+        <div class="panel-title"><h3 id="left-title">Employee · Jordan Reed</h3><span class="mono muted" id="left-screen">My Shifts</span></div>
         <div class="shift" id="manager"></div>
       </div>
       <div class="panel">
@@ -268,7 +271,8 @@ footer { padding-block: 28px; border-top: 1px solid var(--line); color: var(--mu
     { id: "leo", name: "Leo Martinez", pos: "Dishwasher", other: "3pm–11pm" }
   ];
   var s;
-  function fresh() { s = { phase: "open", claimer: null, declined: [], started: 0, took: 0 }; }
+  var REASONS = ["Sick", "Family emergency", "Transportation", "Other"];
+  function fresh() { s = { phase: "shift", reason: null, claimer: null, declined: [], started: 0, took: 0 }; }
   fresh();
 
   function byId(id) { for (var i = 0; i < staff.length; i++) if (staff[i].id === id) return staff[i]; return null; }
@@ -278,22 +282,37 @@ footer { padding-block: 28px; border-top: 1px solid var(--line); color: var(--mu
 
   var guide = document.getElementById("guide");
   var mgr = document.getElementById("manager");
+  var leftTitle = document.getElementById("left-title");
+  var leftScreen = document.getElementById("left-screen");
   var list = document.getElementById("staff");
 
   function render() {
     var c = s.claimer ? byId(s.claimer) : null;
     var g = {
-      open: "<b>Step 1 of 3</b>You're the manager. Jordan just called out sick. Tap <strong>Find cover</strong>.",
-      sent: "<b>Step 2 of 3</b>Now you're a staff member. Pick anyone on the right and tap <strong>I'll take it</strong>.",
-      claimed: "<b>Step 3 of 3</b>Back to the manager. <strong>Approve</strong> or <strong>Decline</strong>. Watch for the double-shift warning.",
+      shift: "<b>Step 1 of 4</b>You're Jordan, the employee. You woke up sick. Tap <strong>Call out</strong>.",
+      reason: "<b>Step 1 of 4</b>Pick a reason, then tap <strong>Confirm call out</strong>.",
+      open: "<b>Step 2 of 4</b>Now you're the manager. Jordan's call-out just came in. Tap <strong>Find cover</strong>.",
+      sent: "<b>Step 3 of 4</b>Now you're a staff member. Pick anyone on the right and tap <strong>I'll take it</strong>.",
+      claimed: "<b>Step 4 of 4</b>Back to the manager. <strong>Approve</strong> or <strong>Decline</strong>. Watch for the double-shift warning.",
       filled: "<b>Done</b>The shift is covered, and everyone can see who's coming in."
     }[s.phase];
     guide.innerHTML = g;
+    var emp = s.phase === "shift" || s.phase === "reason";
+    leftTitle.textContent = emp ? "Employee · Jordan Reed" : "Manager · Maria Lopez";
+    leftScreen.textContent = emp ? "My Shifts" : "Open Shifts";
 
-    var pill = { open: '<span class="pill need">Needs cover</span>', sent: '<span class="pill wait">Texts sent · waiting</span>', claimed: '<span class="pill wait">Claimed · needs approval</span>', filled: '<span class="pill done">Filled</span>' }[s.phase];
+    var pill = { shift: '<span class="pill plain">Scheduled</span>', reason: '<span class="pill need">Calling out</span>', open: '<span class="pill need">Needs cover</span>', sent: '<span class="pill wait">Texts sent · waiting</span>', claimed: '<span class="pill wait">Claimed · needs approval</span>', filled: '<span class="pill done">Filled</span>' }[s.phase];
     var h = '<div class="shift-top"><div><div class="shift-name">Server · 7am–3pm</div><div class="mono muted">Saturday</div></div>' + pill + '</div>';
-    if (s.phase === "open") {
-      h += '<p>Jordan Reed called out. Reason: <strong>sick</strong>. <span class="mono muted">6:02 AM</span></p>';
+    if (s.phase === "shift") {
+      h += '<p>You\'re scheduled today. If you can\'t make it, call out here so your manager can find cover.</p>';
+      h += '<div class="row"><button class="btn" type="button" data-act="callout">Call out</button></div>';
+    } else if (s.phase === "reason") {
+      h += '<p>Why can\'t you make it?</p><div class="reasons">' + REASONS.map(function (r) {
+        return '<button class="btn ghost small" type="button" data-act="reason" data-reason="' + r + '" aria-pressed="' + (s.reason === r) + '">' + r + '</button>';
+      }).join("") + '</div>';
+      h += '<div class="row"><button class="btn" type="button" data-act="confirm"' + (s.reason ? '' : ' disabled') + '>Confirm call out</button><button class="btn ghost" type="button" data-act="back">Cancel</button></div>';
+    } else if (s.phase === "open") {
+      h += '<p>Jordan Reed called out. Reason: <strong>' + esc(s.reason.toLowerCase()) + '</strong>. <span class="mono muted">6:02 AM</span></p>';
       h += '<div class="row"><button class="btn" type="button" data-act="find">Find cover</button></div>';
     } else if (s.phase === "sent") {
       var n = asked().length;
@@ -310,13 +329,13 @@ footer { padding-block: 28px; border-top: 1px solid var(--line); color: var(--mu
       h += '<div class="row"><button class="btn ok" type="button" data-act="approve">Approve</button><button class="btn ghost" type="button" data-act="decline">Decline</button></div>';
     } else {
       h += '<p><strong>' + esc(c.name) + '</strong> is covering. Everyone can see it.</p>';
-      h += '<p class="mono timer">Filled ' + took(s.took) + ' after you tapped Find cover</p>';
+      h += '<p class="mono timer">Filled ' + took(s.took) + ' after Jordan called out</p>';
     }
     mgr.innerHTML = h;
 
     list.innerHTML = staff.map(function (p) {
       var out = '<div class="mini"><div><div class="mini-name">' + esc(p.name) + '</div><div class="mini-meta">' + esc(p.pos) + ' · ' + (p.other ? "works " + esc(p.other) : "off today") + '</div></div>';
-      if (s.phase === "open") return out + '<p class="mini-meta">No messages yet.</p></div>';
+      if (s.phase === "shift" || s.phase === "reason" || s.phase === "open") return out + '<p class="mini-meta">No messages yet.</p></div>';
       out += '<div class="bubble"><strong>Open shift: today, 7am–3pm, Server.</strong>Tap to claim.</div>';
       var declined = s.declined.indexOf(p.id) !== -1;
       if (declined && s.phase !== "filled") out += '<p class="status">Not approved this time.</p>';
@@ -331,7 +350,11 @@ footer { padding-block: 28px; border-top: 1px solid var(--line); color: var(--mu
     var b = e.target.closest("[data-act]");
     if (!b) return;
     var a = b.getAttribute("data-act");
-    if (a === "find") { s.phase = "sent"; s.started = Date.now(); }
+    if (a === "callout") { s.phase = "reason"; }
+    else if (a === "reason") { s.reason = b.getAttribute("data-reason"); }
+    else if (a === "back") { s.phase = "shift"; s.reason = null; }
+    else if (a === "confirm" && s.reason) { s.phase = "open"; s.started = Date.now(); }
+    else if (a === "find") { s.phase = "sent"; }
     else if (a === "claim" && s.phase === "sent") { s.claimer = b.getAttribute("data-id"); s.phase = "claimed"; }
     else if (a === "approve") { s.phase = "filled"; s.took = Math.max(1, Math.round((Date.now() - s.started) / 1000)); }
     else if (a === "decline") { s.declined.push(s.claimer); s.claimer = null; s.phase = "sent"; }
