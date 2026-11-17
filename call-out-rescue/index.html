@@ -272,13 +272,15 @@ footer { padding-block: 28px; border-top: 1px solid var(--line); color: var(--mu
   ];
   var s;
   var REASONS = ["Sick", "Family emergency", "Transportation", "Other"];
-  function fresh() { s = { phase: "shift", reason: null, claimer: null, declined: [], started: 0, took: 0 }; }
+  function fresh() { s = { phase: "shift", reason: null, wave: 1, claimer: null, declined: [], started: 0, took: 0 }; }
   fresh();
 
   function byId(id) { for (var i = 0; i < staff.length; i++) if (staff[i].id === id) return staff[i]; return null; }
-  function asked() { return staff.filter(function (p) { return s.declined.indexOf(p.id) === -1; }); }
+  // Same position first: servers get the server shift, everyone else only in the second round.
+  function gets(p) { return p.pos === "Server" || s.wave === 2; }
+  function asked() { return staff.filter(function (p) { return gets(p) && s.declined.indexOf(p.id) === -1; }); }
   function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
-  function took(sec) { return sec < 60 ? sec + " seconds" : Math.floor(sec / 60) + " min " + (sec % 60) + " sec"; }
+  function took(sec) { return sec === 1 ? "1 second" : sec < 60 ? sec + " seconds" : Math.floor(sec / 60) + " min " + (sec % 60) + " sec"; }
 
   var guide = document.getElementById("guide");
   var mgr = document.getElementById("manager");
@@ -292,10 +294,11 @@ footer { padding-block: 28px; border-top: 1px solid var(--line); color: var(--mu
       shift: "<b>Step 1 of 4</b>You're Jordan, the employee. You woke up sick. Tap <strong>Call out</strong>.",
       reason: "<b>Step 1 of 4</b>Pick a reason, then tap <strong>Confirm call out</strong>.",
       open: "<b>Step 2 of 4</b>Now you're the manager. Jordan's call-out just came in. Tap <strong>Find cover</strong>.",
-      sent: "<b>Step 3 of 4</b>Now you're a staff member. Pick anyone on the right and tap <strong>I'll take it</strong>.",
+      sent: "<b>Step 3 of 4</b>Now you're a staff member. Claim it as a server on the right, or tap <strong>Skip ahead 15 min</strong> to see it go to everyone else.",
       claimed: "<b>Step 4 of 4</b>Back to the manager. <strong>Approve</strong> or <strong>Decline</strong>. Watch for the double-shift warning.",
       filled: "<b>Done</b>The shift is covered, and everyone can see who's coming in."
     }[s.phase];
+    if (s.phase === "sent" && s.wave === 2) g = "<b>Step 3 of 4</b>Now everyone available has the text. Pick anyone on the right and tap <strong>I'll take it</strong>.";
     guide.innerHTML = g;
     var emp = s.phase === "shift" || s.phase === "reason";
     leftTitle.textContent = emp ? "Employee · Jordan Reed" : "Manager · Maria Lopez";
@@ -316,15 +319,20 @@ footer { padding-block: 28px; border-top: 1px solid var(--line); color: var(--mu
       h += '<div class="row"><button class="btn" type="button" data-act="find">Find cover</button></div>';
     } else if (s.phase === "sent") {
       var n = asked().length;
-      if (n) {
-        h += '<p>Texts sent to ' + n + ' available staff at <span class="mono">6:04 AM</span>.</p>';
-        h += '<p class="muted">Nobody has claimed it yet. You\'ll get a reminder at <span class="mono">6:19 AM</span>, then every 15 minutes.</p>';
+      if (s.wave === 1) {
+        h += '<p>Servers get the first chance. Texts sent to ' + n + ' available server' + (n === 1 ? '' : 's') + ' at <span class="mono">6:04 AM</span>.</p>';
+        h += '<p class="muted">If no server claims it by <span class="mono">6:19 AM</span>, it goes to the rest of the available staff.</p>';
+        h += '<div class="row"><button class="btn ghost small" type="button" data-act="widen">Skip ahead 15 min</button></div>';
+      } else if (n) {
+        h += '<p>No server took it, so at <span class="mono">6:19 AM</span> the text went to the rest of the available staff.</p>';
+        h += '<p class="muted">You\'ll get a reminder every 15 minutes until it\'s filled.</p>';
       } else {
         h += '<p>Everyone available has been asked and declined.</p><p class="muted">You may need to cover this shift yourself.</p>';
       }
       if (s.declined.length) h += '<p class="muted">Declined: ' + s.declined.map(function (id) { return esc(byId(id).name); }).join(", ") + '. The shift reopened for everyone else.</p>';
     } else if (s.phase === "claimed") {
       h += '<p><strong>' + esc(c.name) + '</strong> (' + esc(c.pos) + ') wants to cover this shift.</p>';
+      if (c.pos !== "Server") h += '<div class="warning">' + esc(c.name.split(" ")[0]) + ' is a ' + esc(c.pos.toLowerCase()) + ', not a server. Make sure they can work this shift.</div>';
       if (c.other) h += '<div class="warning">Also working ' + esc(c.other) + ' today. Approving means a 16-hour day.</div>';
       h += '<div class="row"><button class="btn ok" type="button" data-act="approve">Approve</button><button class="btn ghost" type="button" data-act="decline">Decline</button></div>';
     } else {
@@ -336,6 +344,7 @@ footer { padding-block: 28px; border-top: 1px solid var(--line); color: var(--mu
     list.innerHTML = staff.map(function (p) {
       var out = '<div class="mini"><div><div class="mini-name">' + esc(p.name) + '</div><div class="mini-meta">' + esc(p.pos) + ' · ' + (p.other ? "works " + esc(p.other) : "off today") + '</div></div>';
       if (s.phase === "shift" || s.phase === "reason" || s.phase === "open") return out + '<p class="mini-meta">No messages yet.</p></div>';
+      if (!gets(p)) return out + '<p class="mini-meta">' + (s.phase === "sent" ? "Servers get first chance. You'll get the text if no server claims it." : "No messages.") + '</p></div>';
       out += '<div class="bubble"><strong>Open shift: today, 7am–3pm, Server.</strong>Tap to claim.</div>';
       var declined = s.declined.indexOf(p.id) !== -1;
       if (declined && s.phase !== "filled") out += '<p class="status">Not approved this time.</p>';
@@ -357,7 +366,8 @@ footer { padding-block: 28px; border-top: 1px solid var(--line); color: var(--mu
     else if (a === "find") { s.phase = "sent"; }
     else if (a === "claim" && s.phase === "sent") { s.claimer = b.getAttribute("data-id"); s.phase = "claimed"; }
     else if (a === "approve") { s.phase = "filled"; s.took = Math.max(1, Math.round((Date.now() - s.started) / 1000)); }
-    else if (a === "decline") { s.declined.push(s.claimer); s.claimer = null; s.phase = "sent"; }
+    else if (a === "decline") { s.declined.push(s.claimer); s.claimer = null; s.phase = "sent"; if (s.wave === 1 && !asked().length) s.wave = 2; }
+    else if (a === "widen" && s.phase === "sent") { s.wave = 2; }
     render();
   });
   document.getElementById("reset").addEventListener("click", function () { fresh(); render(); });
